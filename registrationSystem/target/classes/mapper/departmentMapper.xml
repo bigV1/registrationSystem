@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.note.Dao.DepartmentDao">
+<!--设置domain类和数据库中表的字段一一对应，注意数据库字段和domain类中的字段名称不致，此处一定要！-->
+    <resultMap id="Dept" type="com.note.Model.Department">
+    	<result column="departmentId" property="departmentId" jdbcType="INTEGER" />
+        <result column="departmentName" property="departmentName" jdbcType="CHAR" />
+        <result column="departmentDes" property="departmentDes" jdbcType="CHAR" />
+        <result column="departmentArea" property="departmentArea" jdbcType="CHAR" />
+        
+    </resultMap>
+    <!-- 查询单条记录 -->
+    <select id="selectDeptByName" parameterType="String" resultMap="Dept">
+        SELECT * FROM department WHERE departmentName = #{departmentName}
+    </select>
+    
+    <!-- 添加记录 -->
+    <insert id="AddDepartment" parameterType="com.note.Model.Department" timeout="20" useGeneratedKeys="true" keyProperty="departmentId">
+        INSERT INTO department(departmentName,departmentDes,departmentArea,status) VALUES(#{departmentName},#{departmentDes},#{departmentArea},1)
+    </insert>
+    
+    <!-- 获取所有科室数据 -->
+     <select id="getAllDeptInfo" parameterType="String" resultMap="Dept">
+        SELECT * FROM department WHERE status = 1
+    </select>
+    
+    <!-- 查询单条记录 -->
+    <select id="getDeptById" parameterType="String" resultMap="Dept">
+        SELECT * FROM department WHERE departmentId = #{departmentId}
+    </select>
+    
+    <!-- 更新 -->
+    <update id="updateDept"  parameterType="com.note.Model.Department">
+         UPDATE department SET departmentName=#{departmentName},departmentDes=#{departmentDes},departmentArea=#{departmentArea} where departmentId=#{departmentId}
+    </update>
+    
+    <!-- 更新状态 -->
+    <update id="updateDeptStatus" parameterType="com.note.Model.Department">
+    	UPDATE department SET status = 0 WHERE departmentId=#{departmentId}
+    </update>
+</mapper>
+
+

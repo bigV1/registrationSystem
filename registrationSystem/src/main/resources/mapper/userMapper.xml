@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.note.Dao.UserDao">
+<!--设置domain类和数据库中表的字段一一对应，注意数据库字段和domain类中的字段名称不致，此处一定要！-->
+    <resultMap id="User" type="com.note.Model.User">
+        <result column="username" property="username" jdbcType="CHAR" />
+        <result column="password" property="password" jdbcType="CHAR" />
+        <result column="address" property="address" jdbcType="CHAR" />
+        <result column="tel" property="tel" jdbcType="CHAR" />
+        <result column="level" property="level" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="CHAR" />
+        <result column="user_id" property="user_id" jdbcType="INTEGER" />
+    </resultMap>
+    <!-- 查询单条记录 -->
+    <select id="selectUserByUsername" parameterType="String" resultMap="User">
+        SELECT * FROM user_account WHERE username = #{username}
+    </select>
+    
+    <!-- 添加记录 -->
+    <insert id="AddUser" parameterType="com.note.Model.User" timeout="20" useGeneratedKeys="true" keyProperty="user_id">
+        INSERT INTO user_account(username,name,password,level,address,tel,status) VALUES(#{username},#{name},#{password},2,#{address},#{tel},1)
+    </insert>
+    
+    <!-- 更新记录 -->
+    <update id="updateUserByUsername" parameterType="com.note.Model.User">
+    	UPDATE user_account SET password = #{password} WHERE username = #{username}
+    </update>
+   
+   
+</mapper>
+
+

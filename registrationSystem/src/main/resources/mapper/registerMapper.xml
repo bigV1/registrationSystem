@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.note.Dao.RegisterDao">
+<!--设置domain类和数据库中表的字段一一对应，注意数据库字段和domain类中的字段名称不致，此处一定要！-->
+    <resultMap id="Reg" type="com.note.Model.Register">
+    
+    	<result column="hzUsername" property="hzUsername" jdbcType="CHAR" />
+        <result column="hzName" property="hzName" jdbcType="CHAR" />
+        <result column="hzId" property="hzId" jdbcType="INTEGER" />
+        <result column="address" property="address" jdbcType="CHAR" />
+        <result column="tel" property="tel" jdbcType="CHAR" />
+        <result column="doctorName" property="doctorName" jdbcType="CHAR" />
+        <result column="doctorId" property="doctorId" jdbcType="INTEGER" />
+        <result column="deptName" property="deptName" jdbcType="CHAR" />
+        <result column="deptId" property="deptId" jdbcType="INTEGER" />
+        <result column="ghStatus" property="ghStatus" jdbcType="INTEGER" />
+        <result column="registerTime" property="registerTime" jdbcType="CHAR" />
+        <result column="createTime" property="createTime" jdbcType="CHAR" />
+    </resultMap>
+    <!-- 查询单条记录 -->
+    <select id="getRegById" parameterType="String" resultMap="Reg">
+        SELECT * FROM register WHERE registerId = #{registerId}
+    </select>
+    
+    <select id="getAllRegister" parameterType="String" resultMap="Reg">
+        SELECT * FROM register WHERE status = 1
+    </select>
+    
+    <select id="getAllRegisterByName" parameterType="String" resultMap="Reg">
+        SELECT * FROM register WHERE status = 1 AND hzUsername = #{hzUsername}
+    </select>
+    <!-- 添加记录 -->
+    <insert id="AddRegister" parameterType="com.note.Model.Register" timeout="20" useGeneratedKeys="true" keyProperty="registerId">
+        INSERT INTO register(hzUsername,hzName,hzId,address,tel,doctorName,doctorId,deptName,deptId,ghStatus,registerTime,createTime,status) 
+        VALUES(#{hzUsername},#{hzName},#{hzId},#{address},#{tel},#{doctorName},#{doctorId},#{deptName},#{deptId},1,#{registerTime},#{createTime},1)
+    </insert>
+    
+    <!-- 更新记录 -->
+    <update id="UpdateStatus" parameterType="com.note.Model.Register">
+    	UPDATE register SET status = 0 WHERE registerId = #{registerId}
+    </update>
+    
+    <update id="UpdateghStatus" parameterType="com.note.Model.Register">
+    	UPDATE register SET ghStatus = 0 WHERE registerId = #{registerId}
+    </update>
+   
+   
+</mapper>

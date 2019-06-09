@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+   
+<web-app  
+        version="2.3"  
+        xmlns="http://java.sun.com/xml/ns/javaee"  
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_3.xsd">  
+   
+  <display-name>Archetype Created Web Application</display-name>
+  
+  <welcome-file-list> 
+		<welcome-file>login.jsp</welcome-file> 
+  </welcome-file-list> 
+
+  <!-- 配置spring资源 -->
+  	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:application.xml</param-value>
+    </context-param>
+    
+  <!-- 乱码问题 -->
+  <filter>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>utf-8</param-value>
+    </init-param>
+  </filter>
+  <init-param>  
+           <param-name>forceEncoding</param-name>  
+           <param-value>true</param-value>  
+        </init-param>
+  <filter-mapping>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <!--配置springmvc DispatcherServlet接收到的http请求通过DispatcherServlet进行分发。-->
+    <servlet>
+        <servlet-name>note</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <!--Sources标注的文件夹下需要新建一个spring文件夹-->
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring/spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>note</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+  
+</web-app>

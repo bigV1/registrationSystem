@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.note.Dao.DoctorDao">
+<!--设置domain类和数据库中表的字段一一对应，注意数据库字段和domain类中的字段名称不致，此处一定要！-->
+    <resultMap id="Doctor" type="com.note.Model.Doctor">
+    	<result column="doctorId" property="doctorId" jdbcType="INTEGER" />
+        <result column="doctorName" property="doctorName" jdbcType="CHAR" />
+        <result column="deptId" property="deptId" jdbcType="INTEGER" />
+        <result column="workTime" property="workTime" jdbcType="CHAR" />
+        <result column="workStatus" property="workStatus" jdbcType="INTEGER" />
+        <result column="doctorDes" property="doctorDes" jdbcType="CHAR" />
+        <result column="deptName" property="deptName" jdbcType="CHAR" />
+        
+    </resultMap>
+    <!-- 查询单条记录 -->
+    <select id="selectDoctorByName" parameterType="String" resultMap="Doctor">
+        SELECT * FROM doctor WHERE doctorName = #{doctorName}
+    </select>
+    
+    <!-- 添加记录 -->
+    <insert id="AddDoctor" parameterType="com.note.Model.Doctor" timeout="20" useGeneratedKeys="true" keyProperty="doctorId">
+        INSERT INTO doctor(doctorName,deptId,workTime,workStatus,doctorDes,status,deptName) 
+        VALUES(#{doctorName},#{deptId},#{workTime},1,#{doctorDes},1,#{deptName})
+    </insert>
+    
+    <!-- 获取所有科室数据 -->
+     <select id="getAllDoctorInfo" parameterType="String" resultMap="Doctor">
+        SELECT * FROM doctor WHERE status = 1
+    </select>
+    
+    <!-- 查询单条记录 -->
+    <select id="getDoctorById" parameterType="String" resultMap="Doctor">
+        SELECT * FROM doctor WHERE doctorId = #{doctorId}
+    </select>
+    
+    <!-- 更新 -->
+    <update id="updateDoctor"  parameterType="com.note.Model.Doctor">
+         UPDATE doctor SET doctorName=#{doctorName},deptId=#{deptId},workTime=#{workTime},doctorDes=#{doctorDes},deptName=#{deptName} WHERE doctorId=#{doctorId}
+    </update>
+    
+    <!-- 更新状态 -->
+    <update id="updateDoctorStatus" parameterType="com.note.Model.Doctor">
+    	UPDATE doctor SET status = 0 WHERE doctorId=#{doctorId}
+    </update>
+    
+    <!-- 更新上班状态 -->
+    <update id="updateDocWorkStatus" parameterType="com.note.Model.Doctor">
+    	UPDATE doctor SET workStatus = #{workStatus} WHERE doctorId=#{doctorId}
+    </update>
+    
+    <!-- 获取所有科室数据 -->
+     <select id="getDoctorByDeptId" parameterType="String" resultMap="Doctor">
+        SELECT * FROM doctor WHERE status = 1 AND deptId = #{deptId}
+    </select>
+    
+</mapper>
+
+
