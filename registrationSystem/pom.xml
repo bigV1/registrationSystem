@@ -18,7 +18,7 @@
         <!-- junit版本号 -->
         <junit.version>4.10</junit.version>
         <!-- mybatis版本号 -->
-        <mybatis.version>3.2.1</mybatis.version>
+        <mybatis.version>3.5.6</mybatis.version>
     </properties>
 
     <dependencies>
